@@ -1,0 +1,63 @@
+---
+# Parallel processing set up
+run_parallel: 1
+n_workers: 10
+threads_per_worker: 1
+# Input dates to process
+input_dates: '20'
+reflectivity_path: "/uufs/chpc.utah.edu/common/home/varble-group2/zhixiao/ref_wrf/ref_blocked_lowcape_1km/"
+reflectivity_basename: "wrfout_d2_ref_"
+output_path: "/uufs/chpc.utah.edu/common/home/varble-group2/zhixiao/ref_wrf/ref_blocked_convmask_lowcape_1km/"
+out_basename: "convmask_"
+terrain_file: "/uufs/chpc.utah.edu/common/home/varble-group2/zhixiao/ref_wrf/terrain_hgt/wrfout_hgt_1km.nc"
+# Parameter in Steiner
+# The background reflectivity fall off point in the cosine fucntion, 
+# if background reflectivity > absConvThres [dBZ], the grid point is a convective core
+absConvThres: 60
+# Minimum difference to background reflectivity [dB] in the cosine function
+minZdiff: 10
+# Any grid point reflectivity > truncZconvThres [dBZ] is automatically a convective core
+truncZconvThres: 55
+# These two reflectivity values sets up the step function background Ze values
+# They control the dilation of grids surrounding the convective cores to be included as "convective region"
+mindBZuse: 25
+dBZforMaxConvRadius: 60
+# Convective radius step-function increment [km]
+conv_rad_increment: 0.5 
+# Convective radius step-function start value [km]
+conv_rad_start: 2.0
+# Background reflectivity step-function increment [dB]
+bkg_refl_increment: 5
+# Maximum convective radius dilation [km]
+maxConvRadius: 5
+# Define a set of radii for final step of convective cell expansion [km]
+# This is for the purpose of making the convective region larger for tracking convective cells
+radii_expand: [1,2,3,4,5]
+# Weak echo threshold [dBZ]
+weakEchoThres: 15
+# Background radius to calculate background reflectivity intensity [km]
+bkgrndRadius: 11
+# Minimum area threshold to be a convective core [km^2] zhixiao
+min_corearea: 4
+# Number of vertical level gaps allowed in calculating echo-top height
+echotop_gap: 4
+# Minimum height above surface elevation to filter the data
+sfc_dz_min: 500
+# Maximum height above surface to calculate low-level max reflectivity 
+# (similar to lowest-level composite reflectiivty)
+sfc_dz_max: 3000
+# Flag to output additional Steiner variables for diagnostic purpose
+return_diag: True
+# Radar file data dimensions and reflectivity variable name
+dx: 1000
+dy: 1000
+x_dimname: "west_east"
+y_dimname: "south_north"
+z_dimname: "bottom_top"
+x_varname: "XLONG"
+y_varname: "XLAT"
+z_varname: "ZAMSL"
+reflectivity_varname: 'REFL_10CM'
+# flag: data sources (radar or wrf)
+iradar: 0
+iwrf: 1
